@@ -37,9 +37,9 @@ package:
   individually: true
 
 plugins:
+  - serverless-esbuild
   - serverless-iam-roles-per-function
   - serverless-offline
-  - serverless-esbuild
 
 custom:
   esbuild:

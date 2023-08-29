@@ -3,7 +3,7 @@ This is an example of duckdb inside lambda that uses esbuild. It has access to y
 It uses an api-key (in `x-api-key` header) which it will output when you deploy/start.
 
 ```
-# install tolls & dependencies
+# install tools & dependencies
 npm i
 
 # run local server

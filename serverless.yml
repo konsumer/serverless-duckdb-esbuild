@@ -1,0 +1,49 @@
+service: serverless-duckdb-esbuild-example
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-west-2
+  apiGateway:
+    apiKeys:
+      - serverless-duckdb-esbuild-example
+
+functions:
+  customer:
+    handler: src/handlers.customer
+    memorySize: 10240
+    timeout: 30
+    events:
+      - http:
+          path: '/'
+          method: get
+          cors: true
+          private: true
+    layers:
+      - 'arn:aws:lambda:us-west-2:041475135427:layer:duckdb-nodejs-x86:3'
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:GetObject
+        Resource: '*'
+      - Effect: Allow
+        Action:
+          - s3:ListBucket
+        Resource: '*'
+
+package:
+  individually: true
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-offline
+  - serverless-esbuild
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    exclude:
+      - duckdb
